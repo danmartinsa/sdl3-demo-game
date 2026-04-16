@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "MinGW",
+            "includePath": [
+                "${workspaceFolder}/src",
+                "C:/SDKs/SDL3-3.4.4-MINGW/x86_64-w64-mingw32/include",
+                "C:/Users/danil/scoop/apps/mingw/current/include",
+                "C:/Users/danil/scoop/apps/mingw/current/x86_64-w64-mingw32/include"
+            ],
+            "defines": [],
+            "compilerPath": "C:/Users/danil/scoop/apps/mingw/current/bin/g++.exe",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "windows-gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

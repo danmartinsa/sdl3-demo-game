@@ -1,0 +1,1 @@
+.\build.ps1 -Config Debug; if ($?) { .\build\Debug\demo-game.exe }
