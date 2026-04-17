@@ -13,12 +13,13 @@ set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "RelWithD
 
 # Find SDL3 (expects SDL3_DIR or CMAKE_PREFIX_PATH to point to the SDL3 install)
 find_package(SDL3 REQUIRED CONFIG)
+find_package(SDL3_image REQUIRED CONFIG)
 
 add_executable(demo-game
     src/main.cpp
 )
 
-target_link_libraries(demo-game PRIVATE SDL3::SDL3)
+target_link_libraries(demo-game PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)
 
 # Per-configuration compiler flags
 target_compile_options(demo-game PRIVATE
@@ -40,5 +41,11 @@ if(WIN32)
             $<TARGET_FILE:SDL3::SDL3>
             $<TARGET_FILE_DIR:demo-game>
         COMMENT "Copying SDL3.dll to output directory"
+    )
+    add_custom_command(TARGET demo-game POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:SDL3_image::SDL3_image>
+            $<TARGET_FILE_DIR:demo-game>
+        COMMENT "Copying SDL3_image.dll to output directory"
     )
 endif()

@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/src",
                 "C:/SDKs/SDL3-3.4.4-MINGW/x86_64-w64-mingw32/include",
+                "C:/SDKs/SDL3_image-3.4.2-MINGW/x86_64-w64-mingw32/include",
                 "C:/Users/danil/scoop/apps/mingw/current/include",
                 "C:/Users/danil/scoop/apps/mingw/current/x86_64-w64-mingw32/include"
             ],
