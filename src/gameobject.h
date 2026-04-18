@@ -6,7 +6,9 @@
 
 enum class PlayerState
 {
-    idle, running, jumping
+    idle,
+    running,
+    jumping
 };
 
 struct PlayerData
@@ -18,9 +20,13 @@ struct PlayerData
     }
 };
 
-struct LevelData {};
+struct LevelData
+{
+};
 
-struct EnemyData {};
+struct EnemyData
+{
+};
 
 union ObjectData
 {
@@ -31,7 +37,9 @@ union ObjectData
 
 enum class ObjectType
 {
-    player, level, enemy
+    player,
+    level,
+    enemy
 };
 
 struct GameObject
@@ -44,13 +52,17 @@ struct GameObject
     std::vector<Animation> animations;
     int currentAnimation;
     SDL_Texture *texture;
+    bool dynamic;
+    SDL_FRect collider;
 
-    GameObject() : data {.level = LevelData()}
+    GameObject() : data{.level = LevelData()}, collider{0}
     {
         type = ObjectType::level;
         direction = 1;
         maxSpeedX = 0;
         position = velocity = acceleration = glm::vec2(0);
         currentAnimation = -1;
+        texture = nullptr;
+        dynamic = false;
     }
 };
