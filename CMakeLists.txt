@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Embed include paths directly in compile_commands.json (needed for IntelliSense)
+set(CMAKE_CXX_USE_RESPONSE_FILE_FOR_INCLUDES OFF)
+
 # Default to Debug if no build type is specified (single-config generators like MinGW Makefiles)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
@@ -14,12 +17,13 @@ set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "RelWithD
 # Find SDL3 (expects SDL3_DIR or CMAKE_PREFIX_PATH to point to the SDL3 install)
 find_package(SDL3 REQUIRED CONFIG)
 find_package(SDL3_image REQUIRED CONFIG)
+find_package(glm REQUIRED CONFIG)
 
 add_executable(demo-game
     src/main.cpp
 )
 
-target_link_libraries(demo-game PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)
+target_link_libraries(demo-game PRIVATE SDL3::SDL3 SDL3_image::SDL3_image glm::glm)
 
 # Per-configuration compiler flags
 target_compile_options(demo-game PRIVATE

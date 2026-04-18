@@ -11,6 +11,7 @@ param(
 $mingwBin = "C:\Users\danil\scoop\apps\mingw\current\bin"
 $sdlPrefix = "C:\SDKs\SDL3-3.4.4-MINGW\x86_64-w64-mingw32"
 $sdlImagePrefix = "C:\SDKs\SDL3_image-3.4.2-MINGW\x86_64-w64-mingw32"
+$glmPrefix = "C:\SDKs\glm-1.0.3\install"
 $buildDir = "$PSScriptRoot\build"
 
 # Add MinGW to PATH for this session
@@ -24,7 +25,7 @@ cmake -S "$PSScriptRoot" -B "$buildDir" `
     -DCMAKE_BUILD_TYPE="$Config" `
     -DCMAKE_C_COMPILER="$mingwBin\gcc.exe" `
     -DCMAKE_CXX_COMPILER="$mingwBin\g++.exe" `
-    -DCMAKE_PREFIX_PATH="$sdlPrefix;$sdlImagePrefix"
+    -DCMAKE_PREFIX_PATH="$sdlPrefix;$sdlImagePrefix;$glmPrefix"
 
 if ($LASTEXITCODE -ne 0) { Write-Error "CMake configure failed"; exit 1 }
 

@@ -6,14 +6,14 @@
                 "${workspaceFolder}/src",
                 "C:/SDKs/SDL3-3.4.4-MINGW/x86_64-w64-mingw32/include",
                 "C:/SDKs/SDL3_image-3.4.2-MINGW/x86_64-w64-mingw32/include",
+                "C:/SDKs/glm-1.0.3/install/include",
                 "C:/Users/danil/scoop/apps/mingw/current/include",
                 "C:/Users/danil/scoop/apps/mingw/current/x86_64-w64-mingw32/include"
             ],
             "defines": [],
             "compilerPath": "C:/Users/danil/scoop/apps/mingw/current/bin/g++.exe",
             "cppStandard": "c++20",
-            "intelliSenseMode": "windows-gcc-x64",
-            "configurationProvider": "ms-vscode.cmake-tools"
+            "intelliSenseMode": "windows-gcc-x64"
         }
     ],
     "version": 4

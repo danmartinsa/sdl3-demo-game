@@ -1,9 +1,9 @@
 {
     "cmake.configureSettings": {
-        "CMAKE_PREFIX_PATH": "C:/SDKs/SDL3-3.4.4-MINGW/x86_64-w64-mingw32;C:/SDKs/SDL3_image-3.4.2-MINGW/x86_64-w64-mingw32",
+        "CMAKE_PREFIX_PATH": "C:/SDKs/SDL3-3.4.4-MINGW/x86_64-w64-mingw32;C:/SDKs/SDL3_image-3.4.2-MINGW/x86_64-w64-mingw32;C:/SDKs/glm-1.0.3/install",
         "CMAKE_C_COMPILER": "C:/Users/danil/scoop/apps/mingw/current/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "C:/Users/danil/scoop/apps/mingw/current/bin/g++.exe"
     },
     "cmake.generator": "MinGW Makefiles",
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json"
 }
