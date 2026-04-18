@@ -24,6 +24,11 @@ struct SDLState
 
 const size_t LAYER_IDX_LEVEL = 0;
 const size_t LAYER_IDX_CHARACTERS = 1;
+const int MAP_ROWS = 5;
+const int MAP_COLS = 50;
+const int TILE_SIZE = 64;
+
+
 struct GameState
 {
     std::array<std::vector<GameObject>, 2> layers;
@@ -296,4 +301,26 @@ void update(const SDLState &state, GameState &gs, Resources &res, GameObject &ob
         // add velocity to position
         obj.position += obj.velocity * deltaTime;
     }
+}
+
+void createTile(const SDLState &state, GameState &gs, const Resources &res)
+{
+    /*
+        0 - Empty
+        1 - Ground
+        2 - Panel
+        3 - Enemy
+        4 - Player
+        5 - Grass
+        6 - Brick
+    */
+    short map[MAP_ROWS][MAP_COLS] = {
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    };
+
+    // for (int )
 }
