@@ -2,6 +2,7 @@
 build/
 
 # VS Code (keep .vscode/settings.json and c_cpp_properties.json for project config)
+.cache
 .vscode/*
 !.vscode/settings.json
 !.vscode/c_cpp_properties.json
