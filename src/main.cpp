@@ -50,8 +50,7 @@ struct Resources
     std::vector<SDL_Texture *> textures;
     SDL_Texture *texIdle, *texRun, *texBrick, *texGrass, *texGround, *texPanel;
 
-    SDL_Texture *loadTexture(SDL_Renderer *renderer,
-                             const std::string &filepath)
+    SDL_Texture *loadTexture(SDL_Renderer *renderer, const std::string &filepath)
     {
         SDL_Texture *tex = IMG_LoadTexture(renderer, filepath.c_str());
         SDL_SetTextureScaleMode(tex, SDL_SCALEMODE_NEAREST);
@@ -136,12 +135,12 @@ int main(int argc, char *argv[])
             }
             case SDL_EVENT_KEY_DOWN:
             {
-                handleKeyInput(state, gs, gs.player(), event.key.scancode, true); 
+                handleKeyInput(state, gs, gs.player(), event.key.scancode, true);
                 break;
             }
             case SDL_EVENT_KEY_UP:
             {
-                handleKeyInput(state, gs, gs.player(), event.key.scancode, false); 
+                handleKeyInput(state, gs, gs.player(), event.key.scancode, false);
                 break;
             }
             }
@@ -165,7 +164,7 @@ int main(int argc, char *argv[])
         SDL_SetRenderDrawColor(state.renderer, 20, 10, 30, 255);
         SDL_RenderClear(state.renderer);
 
-        //draw all objects
+        // draw all objects
         for (auto &layer : gs.layers)
         {
             for (GameObject &obj : layer)
@@ -176,13 +175,12 @@ int main(int argc, char *argv[])
 
         // display debug info
         SDL_SetRenderDrawColor(state.renderer, 255, 255, 255, 255);
-        SDL_RenderDebugText(state.renderer, 5, 5, 
-            std::format("State: {}", static_cast<int>(gs.player().data.player.state)).c_str());
-        
-        
+        SDL_RenderDebugText(state.renderer, 5, 5,
+                            std::format("State: {}", static_cast<int>(gs.player().data.player.state)).c_str());
+        // SDL_RenderDebugText(state.renderer, 5, 5,
+        //     std::format("State: {}", static_cast<int>(gs.layers[LAYER_IDX_CHARACTERS])).c_str());
 
         SDL_RenderPresent(state.renderer);
-
         prevTime = nowTime;
     }
     res.unload();
@@ -234,31 +232,29 @@ void cleanup(SDLState &state)
     SDL_Quit();
 }
 
-void drawObject(const SDLState &state, GameState &gs, GameObject &obj,
-                float deltaTime)
+void drawObject(const SDLState &state, GameState &gs, GameObject &obj, float deltaTime)
 {
     const float spriteSize = 64;
+    float srcX = obj.currentAnimation != -1
+                     ? obj.animations[obj.currentAnimation].currentFrame() * spriteSize
+                     : 0.0f;
+
+    const int TILE_REF_POS = obj.type == ObjectType::player 
+        ? SPRITE_SHEET_CHAR_LEFT
+        : 0;
+
+    SDL_FRect src{.x = srcX,
+                  .y = TILE_REF_POS,
+                  .w = spriteSize,
+                  .h = spriteSize};
 
     SDL_FRect dst{.x = obj.position.x,
                   .y = obj.position.y,
                   .w = spriteSize,
                   .h = spriteSize};
 
-    if (obj.currentAnimation == -1)
-    {
-        SDL_RenderTexture(state.renderer, obj.texture, nullptr, &dst);
-        return;
-    }
-
-    float srcX = obj.animations[obj.currentAnimation].currentFrame() * spriteSize;
-
-    SDL_FRect src{
-        .x = srcX, .y = SPRITE_SHEET_CHAR_LEFT, .w = spriteSize, .h = spriteSize};
-
-    SDL_FlipMode flipMode =
-        obj.direction == -1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-    SDL_RenderTextureRotated(state.renderer, obj.texture, &src, &dst, 0, nullptr,
-                             flipMode);
+    SDL_FlipMode flipMode = obj.direction == -1 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+    SDL_RenderTextureRotated(state.renderer, obj.texture, &src, &dst, 0, nullptr, flipMode);
 }
 
 void update(const SDLState &state, GameState &gs, Resources &res,
@@ -390,7 +386,7 @@ void collisionResponse(const SDLState &state,
                 {
                     objA.position.y += rectC.h;
                 }
-                objB.velocity.y = 0;
+                objA.velocity.y = 0;
             }
             break;
         }
@@ -447,8 +443,7 @@ void createTiles(const SDLState &state, GameState &gs, const Resources &res)
     };
     // clang-format on
 
-    const auto createObject = [&state](int r, int c, SDL_Texture *tex,
-                                       ObjectType type)
+    const auto createObject = [&state](int r, int c, SDL_Texture *tex, ObjectType type)
     {
         GameObject o;
         o.type = type;
@@ -506,19 +501,24 @@ void handleKeyInput(const SDLState &state, GameState &gs, GameObject &obj, SDL_S
     {
         switch (obj.data.player.state)
         {
-            case PlayerState::idle:
+        case PlayerState::idle:
+        {
+            if (key == SDL_SCANCODE_W && keyDown)
             {
-                if (key == SDL_SCANCODE_K && keyDown)
-                {
-                    obj.data.player.state = PlayerState::jumping;
-                    obj.velocity.y += JUMP_FORCE;
-                }
-                break;
+                obj.data.player.state = PlayerState::jumping;
+                obj.velocity.y += JUMP_FORCE;
             }
-            case PlayerState::running:
+            break;
+        }
+        case PlayerState::running:
+        {
+            if (key == SDL_SCANCODE_W && keyDown)
             {
-                break;
+                obj.data.player.state = PlayerState::jumping;
+                obj.velocity.y += JUMP_FORCE;
             }
+            break;
+        }
         }
     }
 }
