@@ -239,9 +239,9 @@ void drawObject(const SDLState &state, GameState &gs, GameObject &obj, float del
                      ? obj.animations[obj.currentAnimation].currentFrame() * spriteSize
                      : 0.0f;
 
-    const int TILE_REF_POS = obj.type == ObjectType::player 
-        ? SPRITE_SHEET_CHAR_LEFT
-        : 0;
+    const float TILE_REF_POS = obj.type == ObjectType::player 
+        ? static_cast<float>(SPRITE_SHEET_CHAR_LEFT)
+        : 0.0f;
 
     SDL_FRect src{.x = srcX,
                   .y = TILE_REF_POS,
